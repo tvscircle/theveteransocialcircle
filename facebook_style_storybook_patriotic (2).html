@@ -1,0 +1,145 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>The Boy Who Dreamed of the Circle</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Georgia', serif;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, red, white, blue);
+      background-size: 600% 600%;
+      animation: flow 15s ease infinite;
+      color: white;
+    }
+
+    @keyframes flow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .storybook-container {
+      width: 500px;
+      height: 650px;
+      margin: auto;
+      border: 4px solid white;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background-size: cover;
+      background-position: center;
+      padding: 20px;
+      box-sizing: border-box;
+      box-shadow: 0 0 15px rgba(255,255,255,0.2);
+    }
+
+    .storybook-title {
+      font-size: 1.8em;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .storybook-text {
+      background: rgba(0,0,0,0.6);
+      padding: 15px;
+      border-radius: 10px;
+      font-size: 1.2em;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .storybook-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    button {
+      padding: 10px 15px;
+      font-size: 1em;
+      cursor: pointer;
+      border: none;
+      border-radius: 6px;
+      background: white;
+      color: black;
+    }
+
+    .logo {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      font-size: 0.9em;
+      background: rgba(255,255,255,0.1);
+      padding: 5px 10px;
+      border-radius: 6px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="storybook-container" id="storybook">
+  <div class="logo">Veteran Social Circle</div>
+  <div class="storybook-title">The Boy Who Dreamed of the Circle</div>
+  <div class="storybook-text" id="storyText">Loading...</div>
+  <div class="storybook-buttons">
+    <button onclick="prevPage()">⟵ Back</button>
+    <button onclick="nextPage()">Next ⟶</button>
+  </div>
+</div>
+
+<script>
+  const story = [
+    { text: "Once upon a time, a little boy named Max dreamed of something big...", image: "https://images.unsplash.com/photo-1504711434969-e33886168f5c" },
+    { text: "He didn't want to be a superhero or a cowboy. He wanted to be a veteran.", image: "https://images.unsplash.com/photo-1583690848937-05c2b69f54c5" },
+    { text: "He watched veterans with pride, respect, and honor. They helped people.", image: "https://images.unsplash.com/photo-1586042091240-2c17dfb9fc5d" },
+    { text: "Max said, 'One day, I’ll wear that uniform. I’ll serve and protect.'", image: "https://images.unsplash.com/photo-1610718021735-6f945b59a7f9" },
+    { text: "And when I do, he thought, 'I'll join the Veteran Social Circle!'", image: "https://images.unsplash.com/photo-1575311373235-c2e3a07387cc" },
+    { text: "Years later, Max did just that. He served bravely and came home.", image: "https://images.unsplash.com/photo-1530549387789-4c1017266632" },
+    { text: "And on his first day back, the Veteran Social Circle welcomed him.", image: "https://images.unsplash.com/photo-1600047508527-03e9c52b5fa5" },
+    { text: "Now Max helps other veterans feel seen, heard, and supported.", image: "https://images.unsplash.com/photo-1590073242675-0c199b06bb85" },
+    { text: "He made his dream come true. And the circle grew bigger every day.", image: "https://images.unsplash.com/photo-1601758125946-6ec2edfa1ec0" },
+    { text: "The End. Welcome to the Circle.", image: "https://images.unsplash.com/photo-1526256262350-7da7584cf5eb" }
+  ];
+
+  let index = 0;
+
+  function updateStory() {
+    const textEl = document.getElementById("storyText");
+    const container = document.getElementById("storybook");
+    textEl.textContent = story[index].text;
+    container.style.backgroundImage = `url('${story[index].image}&w=800')`;
+
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(story[index].text);
+      utter.lang = 'en-US';
+      speechSynthesis.speak(utter);
+    }
+  }
+
+  function nextPage() {
+    if (index < story.length - 1) {
+      index++;
+      updateStory();
+    }
+  }
+
+  function prevPage() {
+    if (index > 0) {
+      index--;
+      updateStory();
+    }
+  }
+
+  window.onload = updateStory;
+</script>
+
+</body>
+</html>
